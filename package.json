@@ -3,11 +3,11 @@
   "version": "0.0.1",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "ng serve --proxy-config proxy.json",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "release": "commit-and-tag-version"
+    "release": "standard-version"
   },
   "private": true,
   "dependencies": {
@@ -19,7 +19,15 @@
     "@angular/platform-browser": "^16.0.0",
     "@angular/platform-browser-dynamic": "^16.0.0",
     "@angular/router": "^16.0.0",
+    "@ngxs/form-plugin": "^3.8.1",
+    "@ngxs/router-plugin": "^3.8.1",
+    "@ngxs/storage-plugin": "^3.8.1",
+    "@ngxs/store": "^3.8.1",
+    "@wangdevops/angular-schematics": "^3.0.1",
+    "lodash": "^4.17.21",
     "ng-zorro-antd": "16.1.0",
+    "ngx-auto-unsubscribe-decorator": "^1.1.0",
+    "object-path-immutable": "^4.1.2",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.13.0"
@@ -29,6 +37,8 @@
     "@angular/cli": "~16.0.1",
     "@angular/compiler-cli": "^16.0.0",
     "@types/jasmine": "~4.3.0",
+    "@types/lodash": "^4.14.197",
+    "@wangdevops/angular-schematics": "*",
     "commit-and-tag-version": "^11.2.2",
     "jasmine-core": "~4.6.0",
     "karma": "~6.4.0",
