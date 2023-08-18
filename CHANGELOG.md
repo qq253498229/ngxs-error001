@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [0.0.1](https://gitee.com/consolelog/cpm-front/compare/v0.0.0...v0.0.1) (2023-08-18)
+
+
+### Features
+
+* 修改主页文字 ([2862a4d](https://gitee.com/consolelog/cpm-front/commit/2862a4d43ff2fce06cd7965f8e22e454195fd859))
+* 添加ng-zorro组件库 ([9b3c937](https://gitee.com/consolelog/cpm-front/commit/9b3c93793d08c47a03b8055599719d219322c74d))
+
 ## 0.0.0 (2023-08-18)
 
 
