@@ -21,10 +21,7 @@ if ('--platform=win64' === process.argv[2]) {
   process.exit(1);
 }
 
-//如果angular没有build则先执行angular应用的build
-if (!fs.pathExistsSync('../dist')) {
-  execSync('yarn --cwd ../ run build')
-}
+execSync('yarn --cwd ../ run build')
 //将angular build之后的目录复制过来
 fs.copySync('../dist', './temp')
 //添加所需文件
