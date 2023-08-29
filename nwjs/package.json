@@ -8,6 +8,7 @@
   },
   "devDependencies": {
     "@types/nw.js": "^0.13.16",
+    "node-notifier": "^10.0.1",
     "nw": "0.75.0-sdk",
     "nw-builder": "4.1.0-beta.3"
   },

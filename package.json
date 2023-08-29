@@ -27,6 +27,7 @@
     "lodash": "^4.17.21",
     "ng-zorro-antd": "16.1.0",
     "ngx-auto-unsubscribe-decorator": "^1.1.0",
+    "node-notifier": "^10.0.1",
     "object-path-immutable": "^4.1.2",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NotificationService } from '../../shared/notification/notification.service';
 
 @Component({
   selector: 'app-welcome',
@@ -7,10 +8,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class WelcomeComponent implements OnInit {
 
-  constructor() {
+  constructor(
+      private notification: NotificationService,
+  ) {
   }
 
   ngOnInit() {
+  }
+
+  test() {
+    this.notification.create(`这是标题`, `这是提醒内容`);
   }
 
 }
