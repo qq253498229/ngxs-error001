@@ -38,6 +38,7 @@
     "@angular/compiler-cli": "^16.0.0",
     "@types/jasmine": "~4.3.0",
     "@types/lodash": "^4.14.197",
+    "@types/nw.js": "^0.13.17",
     "@wangdevops/angular-schematics": "*",
     "commit-and-tag-version": "^11.2.2",
     "jasmine-core": "~4.6.0",
