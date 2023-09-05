@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { NotificationService } from '../../../shared/notification/notification.service';
 import { CronService } from '../../../shared/cron/cron.service';
+import { Store } from '@ngxs/store';
+import { CronAction } from '../../../store/cron';
 
 @Component({
   selector: 'app-list',
@@ -10,7 +12,7 @@ import { CronService } from '../../../shared/cron/cron.service';
 })
 export class ListComponent implements OnInit {
   dataSet = [
-    {title: '111', cron: '* * * * * ?', address: '111'},
+    {id: '6C940E6B-3A6D-447D-AA7F-562307DF8E1B', cron: '* * * * * *', message: '111'},
   ];
 
 
@@ -18,6 +20,7 @@ export class ListComponent implements OnInit {
       private datePipe: DatePipe,
       private notify: NotificationService,
       private cron: CronService,
+      private store: Store,
   ) {
   }
 
@@ -32,9 +35,17 @@ export class ListComponent implements OnInit {
 
   }
 
-  test1(data: { cron: string; address: string; title: string }) {
+  test1(data: any) {
     console.log('data', data);
     // console.log('check result', this.cron.check(data.cron, this.datePipe.transform(Date.now(), 'yyyy-MM-dd HH:mm:ss') || ''));
     // console.log('next result', this.cron.next(data.cron, this.datePipe.transform(Date.now(), 'yyyy-MM-dd HH:mm:ss') || '', 5));
+  }
+
+  startJob(data: any) {
+    this.store.dispatch(new CronAction.StartNotification(data));
+  }
+
+  stopJob(data: any) {
+    this.store.dispatch(new CronAction.StopNotification(data));
   }
 }

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import * as cron from 'cron-parser';
 import { DatePipe } from '@angular/common';
+import { CronJob } from 'cron';
 
 @Injectable({
   providedIn: 'root',
@@ -25,6 +26,9 @@ export class CronService {
    * month	1-12 (or names)
    * day of week	0-7 (or names, 0 or 7 are sunday)
    */
+  globalCronJobMap: {
+    [key: string]: CronJob
+  } = {};
 
   constructor(
       private datePipe: DatePipe,
@@ -58,5 +62,13 @@ export class CronService {
     let options = {currentDate: new Date(time)};
     let parser = cron.parseExpression(expression, options);
     return Array.from({length: count}, () => this.datePipe.transform(parser.next().toDate(), 'yyyy-MM-dd HH:mm:ss') || '');
+  }
+
+  putJob(key: string, cronJob: CronJob) {
+    if (!this.globalCronJobMap[key]) this.globalCronJobMap[key] = cronJob;
+  }
+
+  getJob(key: string) {
+    return this.globalCronJobMap[key];
   }
 }
