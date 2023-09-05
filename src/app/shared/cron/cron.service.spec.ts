@@ -31,7 +31,6 @@ describe('CronService', () => {
     expect(service.check(`1-2 * * * * ?`, current)).toBe(true);
     expect(() => service.check(`-1-2 * * * * ?`, current)).toThrow();
     expect(() => service.check(`20-1 * * * * ?`, current)).toThrow();
-    // expect(service.check(`20-1 * * * * ?`, current)).toBe(true);
 
     expect(service.check(`0/3 * * * * ?`, current)).toBe(true);
     expect(() => service.check(`0/-3 * * * * ?`, current)).toThrow();
