@@ -24,8 +24,7 @@ describe('CronService', () => {
   it('校验cron表达式是否正确', () => {
     let current = datePipe.transform(Date.now(), 'yyyy-MM-dd HH:mm:ss') || '';
 
-    let reg1 = `1,2,3 * * * * ?1`;
-    expect(() => service.check(reg1, current)).toThrowError(`表达式不是标准cron: ${reg1}`);
+    expect(() => service.check(`1,2,3 * * * * ?1`, current)).toThrowError(`表达式不是标准cron: 1,2,3 * * * * ?1`);
     expect(() => service.check(`1 * * * * ?1`, current)).toThrow();
 
     expect(service.check(`* * * * * *`, current)).toBe(true);
