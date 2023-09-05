@@ -5,16 +5,10 @@ import { DatePipe } from '@angular/common';
 
 describe('CronService', () => {
   let service: CronService;
-  let datePipe: DatePipe;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({
-      providers: [
-        DatePipe,
-      ],
-    });
+    TestBed.configureTestingModule({providers: [DatePipe]});
     service = TestBed.inject(CronService);
-    datePipe = TestBed.inject(DatePipe);
   });
 
   it('should be created', () => {
@@ -22,19 +16,16 @@ describe('CronService', () => {
   });
 
   it('校验cron表达式是否正确', () => {
-    expect(() => service.checkExpression(`20-1 * * * * ?`)).toThrowError(`Invalid range: 20-1`);
-    expect(() => service.checkExpression(`1 * * * * ?1`)).toThrow();
-
     expect(service.checkExpression(`* * * * * *`)).toBe(true);
     expect(service.checkExpression(`* * * * * ?`)).toBe(true);
-    expect(service.checkExpression(`1-2 * * * * ?`)).toBe(true);
-    expect(() => service.checkExpression(`-1-2 * * * * ?`)).toThrow();
-
-    expect(service.checkExpression(`0/3 * * * * ?`)).toBe(true);
-    expect(() => service.checkExpression(`0/-3 * * * * ?`)).toThrow();
     expect(service.checkExpression(`33,34 * * * * ?`)).toBe(true);
+    expect(service.checkExpression(`1-2 * * * * ?`)).toBe(true);
+    expect(service.checkExpression(`0/3 * * * * ?`)).toBe(true);
 
-    expect(service.checkExpression(`* * * * * ?`)).toBe(true);
+    expect(() => service.checkExpression(`20-1 * * * * ?`)).toThrowError(`Invalid range: 20-1`);
+    expect(() => service.checkExpression(`1 * * * * ?1`)).toThrow();
+    expect(() => service.checkExpression(`-1-2 * * * * ?`)).toThrow();
+    expect(() => service.checkExpression(`0/-3 * * * * ?`)).toThrow();
   });
 
   it('根据cron和指定时间获取接下来的五个时间点', () => {
