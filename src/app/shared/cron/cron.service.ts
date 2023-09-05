@@ -50,21 +50,22 @@ export class CronService {
     return [];
   }
 
-  private isCron(expression: string) {
+  private isCron(expression: string): boolean {
     let splits = expression.split(' ');
     if (splits.length !== 6) return false;
 
-    let commonReg = new RegExp(/^((\*)|([0-59]+[,0-59]*)|([0-59]+-[0-59]+)|([0-59]+\/\d+)|(\*\/\d+))$/);
-    if (!commonReg.test(splits[0])) return false;//second
-    if (!commonReg.test(splits[1])) return false;//minute
-    if (!commonReg.test(splits[2])) return false;//hour
-    if (!commonReg.test(splits[3])) return false;//day of month
-    if (!commonReg.test(splits[4])) return false;//month
-    if (!new RegExp(/^((\*)|([0-59]+[,0-59]*)|([0-59]+-[0-59]+)|([0-59]+\/\d+)|(\*\/\d+)|\?)$/).test(splits[5])) return false;//day of week
-    let exec = new RegExp(/^([0-59]+)-([0-59]+)$/).exec(splits[0]);
-    if (!!exec && exec[1] >= exec[2]) return false;//第二个数字没有第一个大
-    console.log(`splits[0]:${splits[0]}, exec:${exec}`);
-    console.log('splits', splits);
+    let reg1 = new RegExp(/^((\*)|([0-59]+-[0-59]+)|([0-59]+\/[0-59]+)|([0-59]+[,0-59]*))$/);
+    let reg2 = new RegExp(/^((\*)|([0-23]+-[0-23]+)|([0-23]+\/[0-23]+)|([0-23]+[,0-23]*))$/);
+    let reg3 = new RegExp(/^((\*)|([1-31]+-[1-31]+)|([1-31]+\/[1-30]+)|([1-31]+[,1-31]*))$/);
+    let reg4 = new RegExp(/^((\*)|([1-12]+-[1-12]+)|([1-12]+\/[1-11]+)|([1-12]+[,1-12]*))$/);
+    let reg5 = new RegExp(/^((\*)|([1-7]+-[1-7]+)|([1-7]+[,1-7]*)|(\*\/\d+)|\?)$/);
+
+    if (!reg1.test(splits[0])) return false;//second
+    if (!reg1.test(splits[1])) return false;//minute
+    if (!reg2.test(splits[2])) return false;//hour
+    if (!reg3.test(splits[3])) return false;//day of month
+    if (!reg4.test(splits[4])) return false;//month
+    if (!reg5.test(splits[5])) return false;//day of week
     return true;
   }
 }
