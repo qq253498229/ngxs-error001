@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ListComponent } from './list.component';
+import { DatePipe } from '@angular/common';
+import { NG_ZORRO_MODULES } from '../../../shared/shared.module';
 
 describe('ListComponent', () => {
   let component: ListComponent;
@@ -8,7 +10,9 @@ describe('ListComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [ListComponent]
+      declarations: [ListComponent],
+      providers: [DatePipe],
+      imports: [...NG_ZORRO_MODULES],
     });
     fixture = TestBed.createComponent(ListComponent);
     component = fixture.componentInstance;

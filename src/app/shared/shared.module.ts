@@ -15,7 +15,7 @@ const THIRD_MODULES: any[] = [
   HttpClientModule,
   NgxsFormPluginModule,
 ];
-const NG_ZORRO_MODULES: any[] = [
+export const NG_ZORRO_MODULES: any[] = [
   NzLayoutModule,
   NzMenuModule,
   NzFormModule,

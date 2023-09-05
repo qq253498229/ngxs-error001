@@ -26,18 +26,15 @@ export class ListComponent implements OnInit {
     //   let message = this.datePipe.transform(Date.now(), 'yyyy-MM-dd HH:mm:ss') || '';
     //   this.notify.create('测试通知', message);
     // }, 5000);
-    const cron = `* * * * * ?`;
-    // console.log('check result', this.cron.check(cron, this.datePipe.transform(Date.now(), 'yyyy-MM-dd HH:mm:ss') || ''));
-    console.log('check result', this.cron.checkDate(cron, new Date()));
-    console.log('check result', this.cron.nextDate(cron, new Date()));
+    // console.log('check result1', this.cron.check(`1,2,3 * * * * ?1`, this.datePipe.transform(Date.now(), 'yyyy-MM-dd HH:mm:ss') || ''));
+    // console.log('check result2', this.cron.check(`1 * * * * ?1`, this.datePipe.transform(Date.now(), 'yyyy-MM-dd HH:mm:ss') || ''));
     // console.log('next result', this.cron.next(cron, this.datePipe.transform(Date.now(), 'yyyy-MM-dd HH:mm:ss') || '', 5));
 
   }
 
   test1(data: { cron: string; address: string; title: string }) {
     console.log('data', data);
-    console.log('check result', this.cron.check(data.cron, this.datePipe.transform(Date.now(), 'yyyy-MM-dd HH:mm:ss') || ''));
-    console.log('check result', this.cron.checkDate(data.cron, new Date()));
-    console.log('next result', this.cron.next(data.cron, this.datePipe.transform(Date.now(), 'yyyy-MM-dd HH:mm:ss') || '', 5));
+    // console.log('check result', this.cron.check(data.cron, this.datePipe.transform(Date.now(), 'yyyy-MM-dd HH:mm:ss') || ''));
+    // console.log('next result', this.cron.next(data.cron, this.datePipe.transform(Date.now(), 'yyyy-MM-dd HH:mm:ss') || '', 5));
   }
 }

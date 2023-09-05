@@ -5,13 +5,12 @@ import { Injectable } from '@angular/core';
 })
 export class CronService {
   /**
-   *  # ┌────────────── second (optional)
+   *  # ┌────────────── second
    *  # │ ┌──────────── minute
    *  # │ │ ┌────────── hour
    *  # │ │ │ ┌──────── day of month
    *  # │ │ │ │ ┌────── month
    *  # │ │ │ │ │ ┌──── day of week
-   *  # │ │ │ │ │ │
    *  # │ │ │ │ │ │
    *  # * * * * * *
    *
@@ -25,8 +24,6 @@ export class CronService {
    * day of week	0-7 (or names, 0 or 7 are sunday)
    */
 
-  //const validationRegex = /^(?:\d+|\*|\*\/\d+)$/;
-
   constructor() {
   }
 
@@ -37,13 +34,9 @@ export class CronService {
    * @param time 时间字符串
    */
   check(expression: string, time: string) {
+    if (!this.isCron(expression)) throw new Error(`表达式不是标准cron: ${expression}`);
     console.log('check', expression, time);
-    return false;
-  }
-
-  checkDate(expression: string, time: Date) {
-    console.log('checkDate', expression, time);
-    return false;
+    return true;
   }
 
   /**
@@ -57,7 +50,21 @@ export class CronService {
     return [];
   }
 
-  nextDate(expression: string, time: Date, count: number = 5) {
-    return [];
+  private isCron(expression: string) {
+    let splits = expression.split(' ');
+    if (splits.length !== 6) return false;
+
+    let commonReg = new RegExp(/^((\*)|([0-59]+[,0-59]*)|([0-59]+-[0-59]+)|([0-59]+\/\d+)|(\*\/\d+))$/);
+    if (!commonReg.test(splits[0])) return false;//second
+    if (!commonReg.test(splits[1])) return false;//minute
+    if (!commonReg.test(splits[2])) return false;//hour
+    if (!commonReg.test(splits[3])) return false;//day of month
+    if (!commonReg.test(splits[4])) return false;//month
+    if (!new RegExp(/^((\*)|([0-59]+[,0-59]*)|([0-59]+-[0-59]+)|([0-59]+\/\d+)|(\*\/\d+)|\?)$/).test(splits[5])) return false;//day of week
+    let exec = new RegExp(/^([0-59]+)-([0-59]+)$/).exec(splits[0]);
+    if (!!exec && exec[1] >= exec[2]) return false;//第二个数字没有第一个大
+    console.log(`splits[0]:${splits[0]}, exec:${exec}`);
+    console.log('splits', splits);
+    return true;
   }
 }

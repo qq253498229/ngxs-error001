@@ -9,8 +9,10 @@ export class NotificationService {
   }
 
   create(title: string, message: string) {
+    // @ts-ignore
     if (window.nw) {
       // nwjs客户端下通过node调用系统通知
+      // @ts-ignore
       (global as any).globalBus.showNotification(title, message);
     } else {
       this.showNotification(title, {body: message});
