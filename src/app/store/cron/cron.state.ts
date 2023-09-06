@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Action, State, StateContext } from '@ngxs/store';
 import { CronAction } from '.';
-import { CronJob } from 'cron';
 import * as immutable from 'object-path-immutable';
 import { CronService } from '../../shared/cron/cron.service';
 
@@ -40,13 +39,11 @@ export class CronState {
 
   @Action(CronAction.StartNotification)
   StartNotification(ctx: StateContext<CronStateModel>, {data}: CronAction.StartNotification) {
-    console.log('start', data);
     let state = ctx.getState();
     if (!!state.cronMap && !!state.cronMap[data.id] && state.cronMap[data.id].status === 'start') return;
     let cronJob = this.cronService.newJob(data.cron, data.message);
     cronJob.start();
     this.cronService.putJob(data.id, cronJob);
-    console.log('cronJob', cronJob);
     let mapValue = {
       cron: data.cron,
       status: 'start',
@@ -58,14 +55,13 @@ export class CronState {
 
   @Action(CronAction.StopNotification)
   StopNotification(ctx: StateContext<CronStateModel>, {data}: CronAction.StopNotification) {
-    console.log('stop', data);
     let state = ctx.getState();
     if (!!state.cronMap && !!state.cronMap[data.id] && state.cronMap[data.id].status === 'stop') return;
     let existMap = state.cronMap[data.id];
-    console.log('existMap', existMap);
-    let cronJob: CronJob = this.cronService.getJob(data.id);
-    console.log('cronJob', cronJob);
-    cronJob.stop();
+    let cronJob = this.cronService.getJob(data.id);
+    if (!!cronJob) cronJob.stop();
+    this.cronService.delJob(data.id);
+    ctx.setState(immutable.set(state, ['cronMap', data.id, 'status'], 'stop'));
   }
 
 

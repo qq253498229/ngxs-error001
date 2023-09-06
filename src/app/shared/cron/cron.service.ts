@@ -3,31 +3,32 @@ import * as cron from 'cron-parser';
 import { DatePipe } from '@angular/common';
 import { CronJob } from 'cron';
 
+/**
+ *  # ┌────────────── second
+ *  # │ ┌──────────── minute
+ *  # │ │ ┌────────── hour
+ *  # │ │ │ ┌──────── day of month
+ *  # │ │ │ │ ┌────── month
+ *  # │ │ │ │ │ ┌──── day of week
+ *  # │ │ │ │ │ │
+ *  # * * * * * *
+ *
+ *
+ * field	value
+ * second	0-59
+ * minute	0-59
+ * hour	0-23
+ * day of month	1-31
+ * month	1-12 (or names)
+ * day of week	0-7 (or names, 0 or 7 are sunday)
+ */
 @Injectable({
   providedIn: 'root',
 })
 export class CronService {
-  /**
-   *  # ┌────────────── second
-   *  # │ ┌──────────── minute
-   *  # │ │ ┌────────── hour
-   *  # │ │ │ ┌──────── day of month
-   *  # │ │ │ │ ┌────── month
-   *  # │ │ │ │ │ ┌──── day of week
-   *  # │ │ │ │ │ │
-   *  # * * * * * *
-   *
-   *
-   * field	value
-   * second	0-59
-   * minute	0-59
-   * hour	0-23
-   * day of month	1-31
-   * month	1-12 (or names)
-   * day of week	0-7 (or names, 0 or 7 are sunday)
-   */
+
   globalCronJobMap: {
-    [key: string]: CronJob
+    [key: string]: CronJob | undefined
   } = {};
 
   constructor(
@@ -73,7 +74,6 @@ export class CronService {
   }
 
   startJob(cronMap: any) {
-    console.log('startJob', cronMap);
     for (let key in cronMap) {
       let obj = cronMap[key];
       if (obj.status === 'start') {
@@ -81,7 +81,6 @@ export class CronService {
         cronJob.start();
         this.putJob(key, cronJob);
       }
-      console.log(`key:${key}, value:${JSON.stringify(obj)}`);
     }
   }
 
@@ -97,7 +96,12 @@ export class CronService {
     );
   }
 
-  notification(message: string) {
-    console.log(`job exec, message:${message}`);
+  delJob(id: string) {
+    delete this.globalCronJobMap[id];
   }
+
+  notification(message: string) {
+    console.log(`job 执行了, 信息是:${message}`);
+  }
+
 }
