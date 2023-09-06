@@ -71,4 +71,33 @@ export class CronService {
   getJob(key: string) {
     return this.globalCronJobMap[key];
   }
+
+  startJob(cronMap: any) {
+    console.log('startJob', cronMap);
+    for (let key in cronMap) {
+      let obj = cronMap[key];
+      if (obj.status === 'start') {
+        let cronJob = this.newJob(obj.cron, obj.message);
+        cronJob.start();
+        this.putJob(key, cronJob);
+      }
+      console.log(`key:${key}, value:${JSON.stringify(obj)}`);
+    }
+  }
+
+  newJob(cron: string, message: string) {
+    return new CronJob(
+        cron,
+        () => {
+          this.notification(message);
+        },
+        null,
+        true,
+        'Asia/Shanghai',
+    );
+  }
+
+  notification(message: string) {
+    console.log(`job exec, message:${message}`);
+  }
 }

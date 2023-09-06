@@ -1,4 +1,8 @@
 export namespace SystemAction {
+  export class ResetConfig {
+    static readonly type = `重置全局配置`;
+  }
+
   export class Copy {
     static readonly type = `复制文本`;
 

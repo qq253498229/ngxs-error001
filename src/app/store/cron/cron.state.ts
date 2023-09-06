@@ -6,7 +6,6 @@ import * as immutable from 'object-path-immutable';
 import { CronService } from '../../shared/cron/cron.service';
 
 export interface CronStateModel {
-  id: number;
   cronMap: {
     [key: string]: {
       status: 'start' | 'stop',
@@ -19,7 +18,6 @@ export interface CronStateModel {
 @State<CronStateModel>({
   name: 'cron',
   defaults: {
-    id: 1,
     cronMap: {},
   },
 })
@@ -33,11 +31,11 @@ export class CronState {
   ) {
   }
 
-  @Action(CronAction.ChangeId)
-  changeId(ctx: StateContext<CronStateModel>, data: CronAction.ChangeId) {
-    ctx.patchState({
-      id: data.id,
-    });
+  @Action(CronAction.ResetConfig)
+  ResetConfig(ctx: StateContext<CronStateModel>) {
+    let state = ctx.getState();
+    //开启job，之前开启的在刷新页面之后还要重新开启
+    this.cronService.startJob(state.cronMap);
   }
 
   @Action(CronAction.StartNotification)
@@ -45,15 +43,7 @@ export class CronState {
     console.log('start', data);
     let state = ctx.getState();
     if (!!state.cronMap && !!state.cronMap[data.id] && state.cronMap[data.id].status === 'start') return;
-    let cronJob = new CronJob(
-        data.cron,
-        () => {
-          console.log(`job exec, message:${data.message}`);
-        },
-        null,
-        true,
-        'Asia/Shanghai',
-    );
+    let cronJob = this.cronService.newJob(data.cron, data.message);
     cronJob.start();
     this.cronService.putJob(data.id, cronJob);
     console.log('cronJob', cronJob);
@@ -77,4 +67,6 @@ export class CronState {
     console.log('cronJob', cronJob);
     cronJob.stop();
   }
+
+
 }

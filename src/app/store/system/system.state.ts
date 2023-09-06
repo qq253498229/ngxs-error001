@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Action, State, StateContext } from '@ngxs/store';
 import { SystemAction } from './system.action';
 import { Clipboard } from '@angular/cdk/clipboard';
+import { CronAction } from '../cron';
 
 export interface SystemStateModel {
   /**
@@ -20,7 +21,7 @@ export interface SystemStateModel {
 export class SystemState {
 
   constructor(
-    private clipboard: Clipboard,
+      private clipboard: Clipboard,
   ) {
   }
 
@@ -32,5 +33,13 @@ export class SystemState {
   @Action(SystemAction.Copy)
   copyText(ctx: StateContext<SystemStateModel>, data: SystemAction.Copy) {
     this.clipboard.copy(data.text);
+  }
+
+  @Action(SystemAction.ResetConfig)
+  ResetConfig(ctx: StateContext<SystemStateModel>) {
+    ctx.patchState({tempData: undefined});
+    return ctx.dispatch([
+      new CronAction.ResetConfig(),
+    ]);
   }
 }

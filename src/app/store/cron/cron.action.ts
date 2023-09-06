@@ -1,9 +1,6 @@
 export namespace CronAction {
-  export class ChangeId {
-    static readonly type = `修改id`;
-
-    constructor(public id: number) {
-    }
+  export class ResetConfig {
+    static readonly type = `重置配置`;
   }
 
   export class StartNotification {
