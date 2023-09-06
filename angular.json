@@ -43,7 +43,8 @@
             ],
             "scripts": [],
             "allowedCommonJsDependencies": [
-              "cron-parser"
+              "cron-parser",
+              "cron"
             ]
           },
           "configurations": {
