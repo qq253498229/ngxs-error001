@@ -6,23 +6,23 @@
   <nz-table #basicTable [nzData]="(list$|async)||[]">
     <thead>
     <tr>
-      <th>cron表达式</th>
+      <th nzWidth="200px">cron表达式</th>
       <th>提示消息</th>
       <th>状态</th>
-      <th>操作</th>
+      <th nzRight>操作</th>
     </tr>
     </thead>
     <tbody>
     <tr *ngFor="let data of basicTable.data">
-      <td>{{data.cron}}</td>
-      <td>{{data.message}}</td>
+      <td nz-tooltip [nzTooltipTitle]="data.cron">{{data.cron}}</td>
+      <td nz-tooltip [nzTooltipTitle]="data.message">{{data.message}}</td>
       <td>
         <button nz-button nzType="primary" nzShape="circle" nzSize="small" *ngIf="data.status !== 'start'"
-                (click)="startJob(data)">
+                (click)="startJob(data)" nz-tooltip nzTooltipTitle="开启">
           <span nz-icon nzType="caret-right"></span>
         </button>
         <button nz-button nzType="primary" nzShape="circle" nzSize="small" nzDanger *ngIf="data.status === 'start'"
-                (click)="stopJob(data)">
+                (click)="stopJob(data)" nz-tooltip nzTooltipTitle="关闭">
           <span nz-icon nzType="pause"></span>
         </button>
       </td>

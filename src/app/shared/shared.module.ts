@@ -14,6 +14,7 @@ import { NzInputModule } from 'ng-zorro-antd/input';
 import { CronStatusPipe } from './pipes/cron-status.pipe';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
+import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 
 const THIRD_MODULES: any[] = [
   FormsModule,
@@ -32,6 +33,7 @@ export const NG_ZORRO_MODULES: any[] = [
   NzInputModule,
   NzIconModule,
   NzPopconfirmModule,
+  NzToolTipModule,
 ];
 const COMPONENTS: any[] = [];
 const DIRECTIVES: any[] = [];
