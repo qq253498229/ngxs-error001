@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import * as cron from 'cron-parser';
 import { DatePipe } from '@angular/common';
 import { CronJob } from 'cron';
+import { NotificationService } from '../notification/notification.service';
 
 /**
  *  # ┌────────────── second
@@ -33,6 +34,7 @@ export class CronService {
 
   constructor(
       private datePipe: DatePipe,
+      private notificationService: NotificationService,
   ) {
   }
 
@@ -112,7 +114,8 @@ export class CronService {
   }
 
   notification(message: string) {
-    console.log(`job 执行了, 信息是:${message}`);
+    // console.log(`job 执行了, 信息是:${message}`);
+    this.notificationService.create(`定时提醒`, message);
   }
 
 }
