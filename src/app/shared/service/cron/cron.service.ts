@@ -105,7 +105,10 @@ export class CronService {
   }
 
   delJob(id: string) {
-    delete this.globalCronJobMap[id];
+    if (this.globalCronJobMap[id]) {
+      this.globalCronJobMap[id]?.stop();
+      delete this.globalCronJobMap[id];
+    }
   }
 
   notification(message: string) {

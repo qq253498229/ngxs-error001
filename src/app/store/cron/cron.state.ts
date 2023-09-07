@@ -124,6 +124,7 @@ export class CronState {
   @Action(CronAction.Delete)
   Delete(ctx: StateContext<CronStateModel>, {data}: CronAction.Delete) {
     let state = ctx.getState();
+    this.cronService.delJob(data.id);
     ctx.setState(immutable.del(state, ['cronMap', data.id]));
   }
 }
