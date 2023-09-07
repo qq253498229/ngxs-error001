@@ -47,9 +47,17 @@ export class CronService {
     return true;
   }
 
+  /**
+   * 检查表达式的格式是否正确
+   * @param expression 表达式
+   */
   checkExpression(expression: string) {
-    cron.parseExpression(expression);
-    return true;
+    try {
+      cron.parseExpression(expression);
+      return true;
+    } catch (e) {
+      return false;
+    }
   }
 
   /**

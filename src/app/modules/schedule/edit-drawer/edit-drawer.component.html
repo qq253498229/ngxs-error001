@@ -1,8 +1,12 @@
 <form nz-form [formGroup]="myForm" (ngSubmit)="submitForm()" ngxsForm="cron.editDrawerForm">
   <nz-form-item>
     <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="cron">Cron表达式</nz-form-label>
-    <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="请输入Cron表达式">
+    <nz-form-control [nzSm]="14" [nzXs]="24" [nzErrorTip]="cronErrorTpl" nzHasFeedback nzValidatingTip="检查中...">
       <input nz-input type="text" id="cron" formControlName="cron"/>
+      <ng-template #cronErrorTpl let-control>
+        <ng-container *ngIf="control.hasError('required')">请输入cron表达式!</ng-container>
+        <ng-container *ngIf="control.hasError('formatError')">表达式格式不正确!</ng-container>
+      </ng-template>
     </nz-form-control>
   </nz-form-item>
   <nz-form-item>

@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, UntypedFormControl, ValidationErrors, Validators } from '@angular/forms';
 import { Store } from '@ngxs/store';
 import { CronAction, CronSelector } from '../../../store/cron';
 import { NzDrawerRef } from 'ng-zorro-antd/drawer';
 import { AutoUnsubscribe } from 'ngx-auto-unsubscribe-decorator';
 import { uuid } from '../../../shared/utils/common';
+import { Observable, Observer } from 'rxjs';
+import { CronService } from '../../../shared/service/cron/cron.service';
 
 @Component({
   selector: 'app-edit-drawer',
@@ -12,9 +14,18 @@ import { uuid } from '../../../shared/utils/common';
   styleUrls: ['./edit-drawer.component.scss'],
 })
 export class EditDrawerComponent implements OnInit {
+  private cronValidator = (control: UntypedFormControl) => new Observable((observer: Observer<ValidationErrors | null>) => {
+    if (this.cronService.checkExpression(control.value)) {
+      observer.next(null);
+    } else {
+      observer.next({error: true, formatError: true});
+    }
+    observer.complete();
+  });
+
   myForm = this.fb.group({
     id: [uuid()],
-    cron: ['* * * * * *', [Validators.required]],
+    cron: ['* * * * * *', [Validators.required], [this.cronValidator]],
     message: ['提示消息', [Validators.required]],
   });
   @AutoUnsubscribe() cronDrawerFlag$ = this.store.select(CronSelector.cronDrawerFlag);
@@ -23,6 +34,7 @@ export class EditDrawerComponent implements OnInit {
       private fb: FormBuilder,
       private store: Store,
       private ref: NzDrawerRef,
+      private cronService: CronService,
   ) {
   }
 
@@ -30,9 +42,6 @@ export class EditDrawerComponent implements OnInit {
     this.cronDrawerFlag$.subscribe(r => {
       if (!r) this.ref.close();
     });
-    //触发全部校验规则，显示错误信息
-    this.myForm.markAllAsTouched();
-    this.myForm.markAsDirty();
   }
 
   submitForm() {
