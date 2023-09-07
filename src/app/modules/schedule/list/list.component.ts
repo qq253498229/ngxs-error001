@@ -35,4 +35,8 @@ export class ListComponent implements OnInit {
   deleteJob(data: any) {
     this.store.dispatch(new CronAction.Delete(data));
   }
+
+  editJob(data: any) {
+    this.store.dispatch(new CronAction.EditCronDrawer(data));
+  }
 }

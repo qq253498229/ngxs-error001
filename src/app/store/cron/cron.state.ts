@@ -5,7 +5,7 @@ import * as immutable from 'object-path-immutable';
 import { NzDrawerService } from 'ng-zorro-antd/drawer';
 import { EditDrawerComponent } from '../../modules/schedule/edit-drawer/edit-drawer.component';
 import { CronService } from '../../shared/service/cron/cron.service';
-import { ResetForm } from '@ngxs/form-plugin';
+import { ResetForm, UpdateFormValue } from '@ngxs/form-plugin';
 import { uuid } from '../../shared/utils/common';
 
 export interface CronStateModel {
@@ -86,10 +86,19 @@ export class CronState {
   }
 
   @Action(CronAction.EditCronDrawer)
-  EditCronDrawer(ctx: StateContext<CronStateModel>) {
+  EditCronDrawer(ctx: StateContext<CronStateModel>, {data}: CronAction.EditCronDrawer) {
     let state = ctx.getState();
     if (state.cronDrawerFlag) return;
+    let drawerRef = this.drawer.create({
+      nzTitle: '编辑任务',
+      nzContent: EditDrawerComponent,
+      nzWidth: 900,
+    });
+    drawerRef.afterClose.subscribe(() => {
+      ctx.dispatch(new CronAction.CloseCronDrawer());
+    });
     ctx.patchState({cronDrawerFlag: true});
+    return ctx.dispatch(new UpdateFormValue({path: 'cron.editDrawerForm', value: data}));
   }
 
   @Action(CronAction.CloseCronDrawer)
