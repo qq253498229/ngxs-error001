@@ -1,24 +1,41 @@
-<nz-table #basicTable [nzData]="dataSet">
-  <thead>
-  <tr>
-    <th>cron</th>
-    <th>message</th>
-    <th>Action</th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr *ngFor="let data of basicTable.data">
-    <td>{{data.cron}}</td>
-    <td>{{data.message}}</td>
-    <td>
-      <a (click)="startJob(data)">开始</a>
-      <nz-divider nzType="vertical"></nz-divider>
-      <a (click)="stopJob(data)">停止</a>
-      <nz-divider nzType="vertical"></nz-divider>
-      <a>Delete</a>
-      <nz-divider nzType="vertical"></nz-divider>
-      <a (click)="test1(data)">test1</a>
-    </td>
-  </tr>
-  </tbody>
-</nz-table>
+<div>
+  <button nz-button nzType="primary" (click)="newJobDrawer()">新建任务</button>
+</div>
+<nz-divider></nz-divider>
+<div>
+  <nz-table #basicTable [nzData]="(list$|async)||[]">
+    <thead>
+    <tr>
+      <th>cron表达式</th>
+      <th>提示消息</th>
+      <th>状态</th>
+      <th>Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let data of basicTable.data">
+      <td>{{data.cron}}</td>
+      <td>{{data.message}}</td>
+      <td>
+        <button nz-button nzType="primary" nzShape="circle" *ngIf="data.status !== 'start'" (click)="startJob(data)">
+          <span nz-icon nzType="caret-right"></span>
+        </button>
+        <button nz-button nzType="primary" nzShape="circle" nzDanger *ngIf="data.status === 'start'"
+                (click)="stopJob(data)">
+          <span nz-icon nzType="pause"></span>
+        </button>
+      </td>
+      <td>
+        <button nz-button nzType="primary" nzDanger
+                nz-popconfirm
+                nzPopconfirmTitle="确认要删除这个任务吗，删除后将无法恢复?"
+                (nzOnConfirm)="deleteJob(data)"
+        >删除任务
+        </button>
+        <nz-divider nzType="vertical"></nz-divider>
+        <a (click)="test1(data)">test1</a>
+      </td>
+    </tr>
+    </tbody>
+  </nz-table>
+</div>

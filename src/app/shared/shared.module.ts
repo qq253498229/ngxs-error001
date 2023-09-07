@@ -8,6 +8,12 @@ import { NzMenuModule } from 'ng-zorro-antd/menu';
 import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzDividerModule } from 'ng-zorro-antd/divider';
 import { NzTableModule } from 'ng-zorro-antd/table';
+import { NzButtonModule } from 'ng-zorro-antd/button';
+import { NzDrawerModule } from 'ng-zorro-antd/drawer';
+import { NzInputModule } from 'ng-zorro-antd/input';
+import { CronStatusPipe } from './pipes/cron-status.pipe';
+import { NzIconModule } from 'ng-zorro-antd/icon';
+import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
 
 const THIRD_MODULES: any[] = [
   FormsModule,
@@ -21,10 +27,17 @@ export const NG_ZORRO_MODULES: any[] = [
   NzFormModule,
   NzDividerModule,
   NzTableModule,
+  NzButtonModule,
+  NzDrawerModule,
+  NzInputModule,
+  NzIconModule,
+  NzPopconfirmModule,
 ];
 const COMPONENTS: any[] = [];
 const DIRECTIVES: any[] = [];
-const PIPES: any[] = [];
+const PIPES: any[] = [
+  CronStatusPipe,
+];
 
 @NgModule({
   declarations: [

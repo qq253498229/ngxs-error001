@@ -44,7 +44,10 @@
             "scripts": [],
             "allowedCommonJsDependencies": [
               "cron-parser",
-              "cron"
+              "cron",
+              "lodash",
+              "ngx-auto-unsubscribe-decorator",
+              "object-path"
             ]
           },
           "configurations": {

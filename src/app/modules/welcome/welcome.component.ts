@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NotificationService } from '../../shared/notification/notification.service';
+import { NotificationService } from '../../shared/service/notification/notification.service';
 
 @Component({
   selector: 'app-welcome',

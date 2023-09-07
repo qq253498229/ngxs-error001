@@ -1,0 +1,19 @@
+<form nz-form [formGroup]="myForm" (ngSubmit)="submitForm()" ngxsForm="cron.editDrawerForm">
+  <nz-form-item>
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="cron">Cron表达式</nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="请输入Cron表达式">
+      <input nz-input type="text" id="cron" formControlName="cron"/>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="message" nzRequired>提示消息</nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="请输入提示消息">
+      <input nz-input type="text" id="message" formControlName="message"/>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item nz-row class="register-area">
+    <nz-form-control [nzSpan]="14" [nzOffset]="6">
+      <button nz-button nzType="primary" [disabled]="!myForm.dirty || myForm.invalid">提交</button>
+    </nz-form-control>
+  </nz-form-item>
+</form>
