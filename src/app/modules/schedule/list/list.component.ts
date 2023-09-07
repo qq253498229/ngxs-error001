@@ -15,10 +15,6 @@ import { CronService } from '../../../shared/service/cron/cron.service';
 })
 export class ListComponent implements OnInit {
   @AutoUnsubscribe() list$: Observable<any> = this.store.select(CronSelector.list);
-  dataSet = [
-    {id: '6C940E6B-3A6D-447D-AA7F-562307DF8E1B', cron: '* * * * * *', message: '111'},
-  ];
-
 
   constructor(
       private datePipe: DatePipe,
@@ -30,10 +26,6 @@ export class ListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-  }
-
-  test1(data: any) {
-    console.log('data', data);
   }
 
   startJob(data: any) {

@@ -26,14 +26,14 @@
         </button>
       </td>
       <td>
+        <button nz-button nzType="primary">编辑</button>
+        <nz-divider nzType="vertical"></nz-divider>
         <button nz-button nzType="primary" nzDanger
                 nz-popconfirm
                 nzPopconfirmTitle="确认要删除这个任务吗，删除后将无法恢复?"
                 (nzOnConfirm)="deleteJob(data)"
         >删除
         </button>
-        <nz-divider nzType="vertical"></nz-divider>
-        <a (click)="test1(data)">test1</a>
       </td>
     </tr>
     </tbody>

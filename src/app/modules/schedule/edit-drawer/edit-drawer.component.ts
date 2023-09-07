@@ -4,6 +4,7 @@ import { Store } from '@ngxs/store';
 import { CronAction, CronSelector } from '../../../store/cron';
 import { NzDrawerRef } from 'ng-zorro-antd/drawer';
 import { AutoUnsubscribe } from 'ngx-auto-unsubscribe-decorator';
+import { uuid } from '../../../shared/utils/common';
 
 @Component({
   selector: 'app-edit-drawer',
@@ -12,9 +13,9 @@ import { AutoUnsubscribe } from 'ngx-auto-unsubscribe-decorator';
 })
 export class EditDrawerComponent implements OnInit {
   myForm = this.fb.group({
-    id: [''],
-    cron: ['', [Validators.required]],
-    message: ['', [Validators.required]],
+    id: [uuid()],
+    cron: ['* * * * * *', [Validators.required]],
+    message: ['提示消息', [Validators.required]],
   });
   @AutoUnsubscribe() cronDrawerFlag$ = this.store.select(CronSelector.cronDrawerFlag);
 
@@ -26,11 +27,12 @@ export class EditDrawerComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    //触发全部校验规则，显示错误信息
-    this.myForm.markAllAsTouched();
     this.cronDrawerFlag$.subscribe(r => {
       if (!r) this.ref.close();
     });
+    //触发全部校验规则，显示错误信息
+    this.myForm.markAllAsTouched();
+    this.myForm.markAsDirty();
   }
 
   submitForm() {
