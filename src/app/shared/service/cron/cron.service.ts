@@ -114,8 +114,8 @@ export class CronService {
   }
 
   notification(message: string) {
-    // console.log(`job 执行了, 信息是:${message}`);
-    this.notificationService.create(`定时提醒`, message);
+    console.log(`job 执行了, 信息是:${message}`);
+    // this.notificationService.create(`定时提醒`, message);
   }
 
 }

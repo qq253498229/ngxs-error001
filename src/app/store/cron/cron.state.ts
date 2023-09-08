@@ -66,7 +66,9 @@ export class CronState {
     let cronJob = this.cronService.getJob(data.id);
     if (!!cronJob) cronJob.stop();
     this.cronService.delJob(data.id);
-    ctx.setState(immutable.set(state, ['cronMap', data.id, 'status'], 'stop'));
+    if (!!state.cronMap && !!state.cronMap[data.id]) {
+      ctx.setState(immutable.set(state, ['cronMap', data.id, 'status'], 'stop'));
+    }
   }
 
   @Action(CronAction.CreateCronDrawer)
@@ -118,7 +120,7 @@ export class CronState {
     //没有id就是新建，需要给一个新的id
     if (!model.id) model.id = uuid();
     ctx.setState(immutable.set(state, ['cronMap', model.id], model));
-    return ctx.dispatch(new CronAction.CloseCronDrawer());
+    return ctx.dispatch([new CronAction.StopNotification(model), new CronAction.CloseCronDrawer()]);
   }
 
   @Action(CronAction.Delete)
@@ -126,5 +128,6 @@ export class CronState {
     let state = ctx.getState();
     this.cronService.delJob(data.id);
     ctx.setState(immutable.del(state, ['cronMap', data.id]));
+    return ctx.dispatch(new CronAction.StopNotification(data));
   }
 }
