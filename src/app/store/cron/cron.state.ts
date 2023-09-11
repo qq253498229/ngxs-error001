@@ -14,6 +14,7 @@ export interface CronStateModel {
       status: 'start' | 'stop',
       cron: string,
       message: string,
+      nextTime: number[],
     }
   };
   cronDrawerFlag: boolean;

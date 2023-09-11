@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngxs/store';
-import { CronAction, CronSelector } from '../../../store/cron';
+import { CronAction, CronSelector, SystemSelector } from '../../../store';
 import { AutoUnsubscribe } from 'ngx-auto-unsubscribe-decorator';
 import { Observable } from 'rxjs';
 
@@ -11,6 +11,7 @@ import { Observable } from 'rxjs';
 })
 export class ListComponent implements OnInit {
   @AutoUnsubscribe() list$: Observable<any> = this.store.select(CronSelector.list);
+  @AutoUnsubscribe() currentTime$: Observable<any> = this.store.select(SystemSelector.currentTime);
 
   constructor(
       private store: Store,
@@ -18,6 +19,9 @@ export class ListComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.currentTime$.subscribe(r => {
+      console.log('currentTime$', r);
+    });
   }
 
   startJob(data: any) {

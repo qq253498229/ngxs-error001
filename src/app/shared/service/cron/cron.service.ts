@@ -118,4 +118,13 @@ export class CronService {
     // this.notificationService.create(`定时提醒`, message);
   }
 
+  createJob(cron: string, fn: () => void) {
+    return new CronJob(
+        cron,
+        fn,
+        null,
+        true,
+        'Asia/Shanghai',
+    );
+  }
 }

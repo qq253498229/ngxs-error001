@@ -9,6 +9,7 @@
       <th nzWidth="200px">cron表达式</th>
       <th>提示消息</th>
       <th>状态</th>
+      <th>下次执行时间</th>
       <th nzRight>操作</th>
     </tr>
     </thead>
@@ -25,6 +26,9 @@
                 (click)="stopJob(data)" nz-tooltip nzTooltipTitle="关闭">
           <span nz-icon nzType="pause"></span>
         </button>
+      </td>
+      <td>
+
       </td>
       <td>
         <button nz-button nzType="primary" nzSize="small" (click)="editJob(data)">编辑</button>

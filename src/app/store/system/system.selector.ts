@@ -6,4 +6,10 @@ export class SystemSelector {
   static tempData({tempData}: SystemStateModel) {
     return tempData;
   }
+
+  @Selector([SystemState])
+  static currentTime({currentTime}: SystemStateModel) {
+    console.log('currentTime');
+    return currentTime;
+  }
 }

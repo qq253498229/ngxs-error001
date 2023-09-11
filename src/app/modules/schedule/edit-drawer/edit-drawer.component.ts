@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, UntypedFormControl, ValidationErrors, Validators } from '@angular/forms';
 import { Store } from '@ngxs/store';
-import { CronAction, CronSelector } from '../../../store/cron';
+import { CronAction, CronSelector } from '../../../store';
 import { NzDrawerRef } from 'ng-zorro-antd/drawer';
 import { AutoUnsubscribe } from 'ngx-auto-unsubscribe-decorator';
 import { uuid } from '../../../shared/utils/common';

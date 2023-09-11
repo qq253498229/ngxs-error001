@@ -9,6 +9,7 @@ export interface SystemStateModel {
    * 临时数据
    */
   tempData?: any;
+  currentTime?: number;
 }
 
 @State<SystemStateModel>({
@@ -41,5 +42,10 @@ export class SystemState {
     return ctx.dispatch([
       new CronAction.ResetConfig(),
     ]);
+  }
+
+  @Action(SystemAction.UpdateSystemTime)
+  UpdateSystemTime(ctx: StateContext<SystemStateModel>, {data}: SystemAction.UpdateSystemTime) {
+    ctx.patchState({currentTime: data});
   }
 }

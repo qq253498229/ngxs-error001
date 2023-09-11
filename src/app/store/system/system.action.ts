@@ -3,6 +3,13 @@ export namespace SystemAction {
     static readonly type = `重置全局配置`;
   }
 
+  export class UpdateSystemTime {
+    static readonly type = `更新系统时间`;
+
+    constructor(public data: any) {
+    }
+  }
+
   export class Copy {
     static readonly type = `复制文本`;
 
